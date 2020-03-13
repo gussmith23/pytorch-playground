@@ -124,4 +124,10 @@ except Exception as e:
 finally:
     print("Total Elapse: {:.2f}, Best Result: {:.3f}%".format(time.time()-t_begin, best_acc))
 
+out = model.state_dict()
+for name in out:
+    out[name] = out[name].cpu().numpy()
 
+import pickle
+with open(os.path.join(args.logdir, 'params.pkl'), 'wb') as f:
+    pickle.dump(out, f)
